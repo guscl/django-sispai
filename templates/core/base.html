@@ -58,11 +58,13 @@
       <div class="container">
         <h1>Bem-vindo ao Sispai!</h1>
         <p>Todos são bom demais.</p>
-
-       
-
-        <form action="http://192.168.0.168:8080/23/on" method="get">
-          <input  class="btn btn-primary btn-lg" role="button" type = "submit" value="Ligar Lâmpada">
+        
+        <form action="/core/change" method="get">
+          {% if ativado %}
+        	<input  class="btn btn-primary btn-lg" role="button" type = "submit" value="Desligar Lâmpada">
+          {% else %}
+	        <input  class="btn btn-primary btn-lg" role="button" type = "submit" value="Ligar Lâmpada">
+          {% endif %}
         </form>
 
 
