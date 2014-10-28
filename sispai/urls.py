@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^core/$', 'core.views.index'),
-    url(r'^core/change/$', 'core.views.alterStatus'),   
+    url(r'^core/toggle/$', 'core.views.alterStatus'), 
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
