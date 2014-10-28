@@ -5,8 +5,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+<<<<<<< HEAD
     url(r'^core/$', 'core.views.index'),
-    url(r'^core/toggle/$', 'core.views.alterStatus'), 
+    url(r'^core/toggle/$', 'core.views.alterStatus'),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
