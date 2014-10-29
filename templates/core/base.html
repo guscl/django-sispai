@@ -52,23 +52,58 @@
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-
+    
     <!-- Main jumbotron for a primary marketing message or call to action -->
+
     <div class="jumbotron">
+    <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        <p></p>
+        <table style="100%">
+        <tr>
+        <td width="550px">
+        <a class="navbar-brand" href="#">
+            <img alt="Brand" src="{% static "img/SISPAI.png" %}" width="50" height="40">
+          </a>
+        </td>
+        <td>
+          <a class="navbar-brand" href="#">
+            Sensores: OK 
+          </a>
+          <a class="navbar-brand" href="#">
+            Sistema {{ form }}
+          </a>
+          <button type="button" class="btn btn-default navbar-btn">Historico</button>
+          <button type="button" class="btn btn-default navbar-btn">Configuracoes</button>
+          <button type="button" class="btn btn-default navbar-btn">Sair</button>
+        </td>
+        </tr>
+        </table>
+        </div>
+      </div>
+    </nav>
+    </div>
+      
       <div class="container">
-        <h1>Bem-vindo ao Sispai!</h1>
-        <p>Todos são bom demais.</p>
-        
-        <form action="/core" method="get">
-          {% if ativado %}
-        	<input  class="btn btn-primary btn-lg" role="button" type = "submit" value="Desligar Lâmpada">
-          {% else %}
-	        <input  class="btn btn-primary btn-lg" role="button" type = "submit" value="Ligar Lâmpada">
-          {% endif %}
+
+        <h2>Bem-vindo ao Sispai!</h2>
+
+        <form id="atv" align="center" action="/core" method="get">
+          <div align="center">
+           {% if ativado %}
+           <p align="center">Sistema Ativado.</p>
+        	 <input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Desativar">
+            {% else %}
+            <p align="center">Sistema Desativado.</p>
+	         <input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Ativar">
+            {% endif %}
+          </div>
         </form>
 
 
-      </div>
+        </div>      
     </div>
 
     <div class="container">
