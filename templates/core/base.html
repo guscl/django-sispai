@@ -63,21 +63,30 @@
         <p></p>
         <table style="100%">
         <tr>
-        <td width="550px">
-        <a class="navbar-brand" href="#">
-            <img alt="Brand" src="{% static "img/SISPAI.png" %}" width="50" height="40">
-          </a>
+        <td width="500px">
         </td>
         <td>
-          <a class="navbar-brand" href="#">
-            Sensores: OK 
-          </a>
-          <a class="navbar-brand" href="#">
-            Sistema {{ form }}
-          </a>
-          <button type="button" class="btn btn-default navbar-btn">Historico</button>
-          <button type="button" class="btn btn-default navbar-btn">Configuracoes</button>
-          <button type="button" class="btn btn-default navbar-btn">Sair</button>
+          {%if sistema_ativado %}
+          <button type="button" width="50px" style="color:green" class="btn btn-default navbar-btn">
+            Sistema: Ativado
+          </button>
+          {% else %}
+          <button type="button" width="50px" style="color:red" class="btn btn-default navbar-btn">
+            Sistema: Desativado
+          </button>
+          {% endif %}
+          {%if checado %}
+          <button type="button" width="50px" style="color:green" class="btn btn-default navbar-btn">
+            Sensores: Checados
+          </button>
+          {% else %}
+          <button type="button" width="50px" style="color:red" class="btn btn-default navbar-btn">
+            Sensores: Checados
+          </button>
+          {% endif %}
+          <button type="button" width="50px" class="btn btn-default navbar-btn">Historico</button>
+          <button type="button" width="50px" class="btn btn-default navbar-btn">Configuracoes</button>
+          <button type="button" width="50px" class="btn btn-default navbar-btn">Sair</button>
         </td>
         </tr>
         </table>
