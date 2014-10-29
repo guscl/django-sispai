@@ -22,9 +22,12 @@ def alterStatus(request):
 	global status_ativacao
 	status_ativacao = not status_ativacao
 	
-	httpServ = httplib.HTTPConnection("http://192.168.0.168", 8080)
+	httpServ = httplib.HTTPConnection("10.42.0.96", 5000)
 	httpServ.connect()
-	httpServ.request('POST', '/23/on', '')
+	if(status_ativacao):
+		httpServ.request('GET', '/4/on', '')
+	else:
+		httpServ.request('GET', '/4/off', '')
 	httpServ.close()
 	
 	t = loader.get_template('core/base.html')
