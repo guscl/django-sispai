@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-<<<<<<< HEAD
+
     url(r'^core/$', 'core.views.index'),
     url(r'^core/toggle/$', 'core.views.alterStatus'),
 
