@@ -13,6 +13,6 @@ class Pool(models.Model):
     url = models.CharField(max_length=200)
     isActivated = models.BooleanField()
     isChecked = models.BooleanField()
+    isOpen = models.BooleanField()
     def __str__(self):
-    	return self.adultEmail.email
-    
+    	return self.adult.email
