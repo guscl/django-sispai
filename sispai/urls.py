@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^core/$', 'core.views.index'),
     url(r'^core/toggle/$', 'core.views.alterStatus'),
+    url(r'^core/sensors/$', 'core.views.alterSensorStatus'),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
