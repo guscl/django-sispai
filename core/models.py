@@ -16,3 +16,13 @@ class Pool(models.Model):
     isOpen = models.BooleanField()
     def __str__(self):
     	return self.adult.email
+
+class PoolLog(models.Model):
+    pool = models.ForeignKey(Pool)
+    time = models.DateField(auto_now=True)
+    message = models.CharField(max_length=500)
+    @classmethod
+    def create(cls,pool,message):
+        book = cls(pool=pool,message=message)
+        # do something with the book
+        return log

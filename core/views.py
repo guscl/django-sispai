@@ -38,6 +38,8 @@ def alterSensorStatus(request):
 	p1= Pool.objects.get(adult=ad1.email)
 	p1.isChecked = True
 	p1.save()
+	log = PoolLog.create(p1,"Sensores com Problema")
+	log.save()
 	sendMessage()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
