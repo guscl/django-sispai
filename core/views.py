@@ -1,6 +1,7 @@
 from django.template import Context, loader
 from core.models import Adult, Pool
 from django.http import HttpResponse
+from emailSender import sendMessage
 import httplib
 import sys
 
@@ -37,6 +38,7 @@ def alterSensorStatus(request):
 	p1= Pool.objects.get(adult=ad1.email)
 	p1.isChecked = True
 	p1.save()
+	sendMessage()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
 	return HttpResponse(t.render(c))
