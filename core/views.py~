@@ -19,7 +19,7 @@ def index(request):
 	t = loader.get_template('core/base.html')
 	if not request.user.is_authenticated():
 		return redirect(logar)
-	ad1= request.user
+	ad1= request.user.get_profile()
 	p1= Pool.objects.get(adult=ad1)
 	c = Context({'ativado': status_ativacao, 'checado':p1.isChecked})
 	return HttpResponse(t.render(c)) 

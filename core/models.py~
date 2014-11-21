@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Pool(models.Model):
-    adult = models.OneToOneField(User)
+    adult = models.ForeignKey(User)
     url = models.CharField(max_length=200)
     isActivated = models.BooleanField()
     isChecked = models.BooleanField()

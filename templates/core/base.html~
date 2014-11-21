@@ -67,7 +67,7 @@
         <td width="450px">
         </td>
         <td>
-		  {%if ativado %}
+		  {%if sistema_ativado %}
 			  <button type="button" width="50px" style="color:green" class="btn btn-default navbar-btn">
 				Sistema: Ativado
 			  </button>
