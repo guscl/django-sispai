@@ -1,5 +1,5 @@
 from django.template import Context, loader
-from core.models import Adult, Pool
+from core.models import Adult, Pool, PoolLog
 from django.http import HttpResponse
 from emailSender import sendMessage
 import httplib

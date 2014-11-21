@@ -23,6 +23,6 @@ class PoolLog(models.Model):
     message = models.CharField(max_length=500)
     @classmethod
     def create(cls,pool,message):
-        book = cls(pool=pool,message=message)
+        log = cls(pool=pool,message=message)
         # do something with the book
         return log
