@@ -1,15 +1,15 @@
 from django.template import Context, loader
 from core.models import Pool, PoolLog
 from django.http import HttpResponse
-from emailSender import sendMessage
-from django.contrib.auth.models import User
 from django.shortcuts import redirect
 import httplib
 from django.shortcuts import render_to_response, render
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
+from django.contrib.auth import logout
 import sys
 
 status_ativacao = False
@@ -45,7 +45,6 @@ def alterSensorStatus(request):
 	p1.save()
 	log = PoolLog.create(p1,"Sensores com Problema")
 	log.save()
-	sendMessage()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
 	return HttpResponse(t.render(c))
@@ -81,3 +80,28 @@ def logar(request):
     
     #se nenhuma informacao for passada, exibe a pagina de login com o formulario
     return render(request, "logar.html", {"form": AuthenticationForm()})
+
+def getParamsOfMenuBar(request):
+	response_page = None
+	if(request.GET.get('sensorInfo') is not None):
+		pass
+	elif(request.GET.get('log') is not None):
+		response_page = logPage(request)
+	elif(request.GET.get('logout') is not None):
+		response_page = close(request)
+			
+	return response_page	
+
+def logPage(request):
+	if not request.user.is_authenticated():
+		return redirect(logar)
+	ad1= request.user
+	p1= Pool.objects.get(adult=ad1)
+	print p1.adult
+	logs = PoolLog.objects.get(pool=p1)
+	print "akfnf"
+
+def close(request):
+	logout(request)
+	return HttpResponseRedirect("/")
+
