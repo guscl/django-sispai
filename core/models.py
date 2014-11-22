@@ -12,7 +12,7 @@ class Pool(models.Model):
 
 class PoolLog(models.Model):
     pool = models.ForeignKey(Pool)
-    time = models.DateField(auto_now=True)
+    time = models.DateField(auto_now=True, blank=True)
     message = models.CharField(max_length=500)
     @classmethod
     def create(cls,pool,message):

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Pool(models.Model):
-    adult = models.ForeignKey(User)
+    adult = models.OneToOneField(User)
     url = models.CharField(max_length=200)
     isActivated = models.BooleanField()
     isChecked = models.BooleanField()
@@ -12,7 +12,7 @@ class Pool(models.Model):
 
 class PoolLog(models.Model):
     pool = models.ForeignKey(Pool)
-    time = models.DateField(auto_now=True)
+    time = models.DateField(auto_now=True, blank=True)
     message = models.CharField(max_length=500)
     @classmethod
     def create(cls,pool,message):

@@ -85,7 +85,7 @@ def getParamsOfMenuBar(request):
 	response_page = None
 	if(request.GET.get('sensorInfo') is not None):
 		pass
-	elif(request.GET.get('log') is not None):
+	elif(request.GET.get('history') is not None):
 		response_page = logPage(request)
 	elif(request.GET.get('logout') is not None):
 		response_page = close(request)
@@ -98,8 +98,9 @@ def logPage(request):
 	ad1= request.user
 	p1= Pool.objects.get(adult=ad1)
 	print p1.adult
-	logs = PoolLog.objects.get(pool=p1)
-	print "akfnf"
+	logs = PoolLog.objects.filter(pool=p1)
+
+	return render(request, "history.html", {"logList": logs})
 
 def close(request):
 	logout(request)
