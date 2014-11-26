@@ -1,6 +1,9 @@
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' value='Logar' />
-</form>
+{% extends 'structure.html' %}  
 
+{% block body_page %}
+	<form method="POST">
+    	{% csrf_token %}
+    	{{ form.as_p }}
+    	<input type='submit' value='Logar' />
+	</form>
+{% endblock %}
