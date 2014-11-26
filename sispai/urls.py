@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     url(r'^core/$', 'core.views.index'),
+    url(r'^control/$', 'core.views.getParamsOfMenuBar'),
     url(r'^core/toggle/$', 'core.views.alterStatus'), 
     url(r'^registrar/$', 'core.views.registrar'),
     url(r'^$', 'core.views.logar'),

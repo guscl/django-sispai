@@ -7,15 +7,13 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     url(r'^core/$', 'core.views.index'),
-<<<<<<< HEAD
+    url(r'^control/$', 'core.views.getParamsOfMenuBar'),
     url(r'^core/toggle/$', 'core.views.alterStatus'), 
     url(r'^registrar/$', 'core.views.registrar'),
     url(r'^$', 'core.views.logar'),
+    url(r'^history/$', 'core.views.logPage'),
 
-=======
-    url(r'^core/toggle/$', 'core.views.alterStatus'),
     url(r'^core/sensors/$', 'core.views.alterSensorStatus'),
->>>>>>> 60c93f97a571e8dc4e155873cdbd6ff38292c705
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

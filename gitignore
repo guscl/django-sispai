@@ -1,1 +1,1 @@
-*.pyc *.py~ core/*.pyc core/*.py~ sispai/*.pyc sispai/*.py~
+*.pyc *.py~ core/*.pyc core/*.py~ sispai/*.pyc sispai/*.py~ templates/*.html~ templates/core/*.html~ 

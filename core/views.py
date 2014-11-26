@@ -7,9 +7,11 @@ from django.shortcuts import redirect
 import httplib
 from django.shortcuts import render_to_response, render
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
+from django.contrib.auth import logout
 import sys
 
 status_ativacao = False
@@ -81,3 +83,28 @@ def logar(request):
     
     #se nenhuma informacao for passada, exibe a pagina de login com o formulario
     return render(request, "logar.html", {"form": AuthenticationForm()})
+
+def getParamsOfMenuBar(request):
+	response_page = None
+	if(request.GET.get('sensorInfo') is not None):
+		pass
+	elif(request.GET.get('history') is not None):
+		response_page = logPage(request)
+	elif(request.GET.get('logout') is not None):
+		response_page = close(request)
+			
+	return response_page	
+
+def logPage(request):
+	if not request.user.is_authenticated():
+		return redirect(logar)
+	ad1= request.user
+	p1= Pool.objects.get(adult=ad1)
+	logs = PoolLog.objects.filter(pool=p1)
+
+	return render(request, "history.html", {"logList": logs})
+
+def close(request):
+	logout(request)
+	return HttpResponseRedirect("/")
+
