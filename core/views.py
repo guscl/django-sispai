@@ -97,7 +97,6 @@ def logPage(request):
 		return redirect(logar)
 	ad1= request.user
 	p1= Pool.objects.get(adult=ad1)
-	print p1.adult
 	logs = PoolLog.objects.filter(pool=p1)
 
 	return render(request, "history.html", {"logList": logs})

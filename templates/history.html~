@@ -1,4 +1,26 @@
-{% for log in logList %}
- {{log.time}} {{log.message}}
-{%endfor%}
+{% extends 'structure.html' %}   
 
+{% block menu_page %}
+	<a href="http://127.0.0.1:8000/core/">Voltar</a>
+{% endblock %}
+
+{% block body_page %}
+	
+	<table class="table table-bordered">
+		<thead>	
+			<tr>
+				<th>Data e Hora</th>
+				<th>Mensagem</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for log in logList %}
+				<tr>
+					<td>{{log.time}}</td>
+					<td>{{log.message}}</td>
+			 	</tr>
+			{%endfor%}
+		</tbody>
+	</table>
+
+{% endblock %}
