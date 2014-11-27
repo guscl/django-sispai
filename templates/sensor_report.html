@@ -1,0 +1,25 @@
+{% extends 'structure.html' %}
+
+{% block data_menu %}
+	<a href="http://127.0.0.1:8000/core/">Voltar</a>
+{% endblock %}
+
+{% block body_page %}
+
+
+<table class="table table-bordered">
+	<tbody>
+		{% for sensor in sensors %}
+			<tr>
+				<td>{{sensor}}</td>
+				{% if sensors.sensor %}
+					<td style="color:red">Falhando</td>
+				{% else %}
+					<td style="color:blue">Funcionando</td>
+				{% endif %}
+			</tr>
+		{%endfor%}
+	</tbody>
+</table>
+
+{% endblock %}
