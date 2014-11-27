@@ -1,6 +1,8 @@
 from django.template import Context, loader
 from core.models import Pool, PoolLog
 from django.http import HttpResponse
+#from emailSender import sendMessage
+from django.contrib.auth.models import User
 from django.shortcuts import redirect
 import httplib
 from django.shortcuts import render_to_response, render
@@ -23,7 +25,7 @@ def index(request):
 	p1= Pool.objects.get(adult=ad1)
 	status_ativacao = p1.isActivated
 	checado = not(p1.infraRedFail or p1.zigbeeFail or p1.endCourseOpenFail or p1.endCourseCloseFail or p1.crushFail)
-	c = Context({'ativado': status_ativacao, 'checado':checado})
+	c = Context({'ativado': status_ativacao, 'checado':checado, 'usuario':ad1.username})
 	return HttpResponse(t.render(c)) 
     	          
 def alterStatus(request):
@@ -127,6 +129,7 @@ def alterSensorStatus(request):
 	p1.save()
 	log = PoolLog.create(p1,"Sensores com Problema")
 	log.save()
+#	sendMessage()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
 	return HttpResponse(t.render(c))

@@ -1,6 +1,0 @@
-*.pyc
-*.py~
-core/*.pyc
-core/*.py~
-sispai/*.pyc
-sispai/*.py~
