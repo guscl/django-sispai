@@ -21,12 +21,19 @@ def index(request):
 		return redirect(logar)
 	ad1= request.user
 	p1= Pool.objects.get(adult=ad1)
-	c = Context({'ativado': status_ativacao, 'checado':p1.isChecked})
+	status_ativacao = p1.isActivated
+	checado = not(p1.infraRedFail or p1.zigbeeFail or p1.endCourseOpenFail or p1.endCourseCloseFail or p1.crushFail)
+	c = Context({'ativado': status_ativacao, 'checado':checado})
 	return HttpResponse(t.render(c)) 
     	          
 def alterStatus(request):
 	global status_ativacao
 	status_ativacao = not status_ativacao
+	
+	ad1= request.user
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = status_ativacao
+	p1.save()
 	
 	httpServ = httplib.HTTPConnection("10.42.0.30", 5000)
 	httpServ.connect()
@@ -37,6 +44,81 @@ def alterStatus(request):
 	httpServ.close()
 	
 	return index(request)
+
+def poolOpen(request):
+	username = request.POST.get('user')
+	ad1 = User.objects.get(username=username)
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = True
+	p1.endCourseOpen = True
+	p1.endCourseOpenFail = False
+	p1.endCourseClose = False
+	p1.endCourseCloseFail = False
+	p1.save()
+	log = PoolLog.create(p1,"Piscina aberta")
+	log.save()
+
+def poolClose(request):
+	username = request.POST.get('user')
+	ad1 = User.objects.get(username=username)
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = True
+	p1.endCourseOpen = False
+	p1.endCourseOpenFail = False
+	p1.endCourseClose = True
+	p1.endCourseCloseFail = False
+	p1.save()
+	log = PoolLog.create(p1,"Piscina fechada")
+	log.save()
+
+def userGetOut(request):
+	username = request.POST.get('user')
+	ad1 = User.objects.get(username=username)
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = True
+	p1.zigbee = False
+	p1.zigbeeFail = False
+	p1.save()
+	log = PoolLog.create(p1,"Usuario saiu da area")
+	log.save()
+
+def userGetIn(request):
+	username = request.POST.get('user')
+	ad1 = User.objects.get(username=username)
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = True
+	p1.zigbee = True
+	p1.zigbeeFail = False
+	p1.save()
+	log = PoolLog.create(p1,"Usuario entrou na area")
+	log.save()
+
+def sensorFail(request):
+	username = request.GET.get('user')
+	ad1 = User.objects.get(username=username)
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = True
+	p1.infraRedFail = True if request.GET.get('infrared') == '1' else False
+	p1.zigbeeFail = True if request.GET.get('zigbee') == '1' else False
+	p1.endCourseOpenFail = True if request.GET.get('endCourseOpen') == '1' else False
+	p1.endCourseCloseFail = True if request.GET.get('endCourseClose') == '1' else False
+	p1.crushFail = True if request.GET.get('crush') == '1' else False
+	p1.save()
+	
+	string_log = "falha no sensor "
+	if (p1.infraRedFail):
+		string_log = string_log + "infravermelho, "
+	if (p1.zigbeeFail):
+		string_log = string_log + "zigbee, "
+	if (p1.endCourseOpenFail):
+		string_log = string_log + "fim de curso de aberto, "
+	if (p1.endCourseCloseFail):
+		string_log = string_log + "fim de curso de fechado, "
+	if (p1.crushFail):
+		string_log = string_log + "de esmagamento."
+	
+	log = PoolLog.create(p1,string_log)
+	log.save()
 
 def alterSensorStatus(request):
 	ad1= User.objects.get(email="root")
@@ -84,13 +166,16 @@ def logar(request):
 def getParamsOfMenuBar(request):
 	response_page = None
 	if(request.GET.get('sensorInfo') is not None):
-		pass
+		response_page = sensorsReport(request)
 	elif(request.GET.get('history') is not None):
 		response_page = logPage(request)
 	elif(request.GET.get('logout') is not None):
 		response_page = close(request)
 			
 	return response_page	
+
+def sensorsReport(request):
+	pass
 
 def logPage(request):
 	if not request.user.is_authenticated():

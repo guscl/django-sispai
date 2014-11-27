@@ -4,11 +4,11 @@
     <form method="get" name action="/control">
 		{%if checado %}
 			<button type="submit" name="sensorInfo" width="50px" style="color:blue" class="btn btn-default navbar-btn">
-				Sensores: Checados
+				Sensores: OK
 			</button>
 		{% else %}
 			<button type="submit" name="sensorInfo" width="50px" style="color:red" class="btn btn-default navbar-btn">
-				Sensores: Não Checados
+				Sensores: Falha detectada
 			</button>
 		{% endif %}
 			<button type="submit" name="history" width="50px" class="btn btn-default navbar-btn">Histórico</button>
