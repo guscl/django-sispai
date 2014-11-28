@@ -183,10 +183,7 @@ def sensorsReport(request):
 	p1= Pool.objects.get(adult=ad1)
 	status_ativacao = p1.isActivated
 	checado = not(p1.infraRedFail or p1.zigbeeFail or p1.endCourseOpenFail or p1.endCourseCloseFail or p1.crushFail)
-	sensors = {"infrared": p1.infraRedFail, "zigbee": p1.zigbeeFail,"crush": p1.crushFail,"endCourseOpen": p1.endCourseOpenFail, "endCourseClose": p1.endCourseCloseFail}
-	print sensors
-
-	return render(request, "sensor_report.html", {'usuario':ad1.username, 'ativado': status_ativacao, 'checado':checado,"sensors": sensors})
+	return render(request, "sensor_report.html", {'usuario':ad1.username, 'ativado': status_ativacao, 'checado':checado, "infrared": p1.infraRedFail, "zigbee": p1.zigbeeFail,"crush": p1.crushFail,"endCourseOpen": p1.endCourseOpenFail, "endCourseClose": p1.endCourseCloseFail})
 
 def logPage(request):
 	if not request.user.is_authenticated():
