@@ -1,11 +1,25 @@
 {% extends 'structure.html' %}
 
+
 {% block data_menu %}
-	<a href="http://127.0.0.1:8000/core/">Voltar</a>
+    <form method="get" name action="/control">
+		{%if checado %}
+			<button type="submit" name="sensorInfo" width="50px" style="color:blue" class="btn btn-default navbar-btn">
+				Sensores: OK
+			</button>
+		{% else %}
+			<button type="submit" name="sensorInfo" width="50px" style="color:red" class="btn btn-default navbar-btn">
+				Sensores: Falha detectada
+			</button>
+		{% endif %}
+			<button type="submit" name="history" width="50px" class="btn btn-default navbar-btn">Histórico</button>
+		    <button type="submit" name="logout" width="50px" class="btn btn-default navbar-btn">Sair</button>
+	</form>
 {% endblock %}
 
 {% block body_page %}
-
+	
+	<a href="http://127.0.0.1:8000/core/">Inicial</a>
 
 <table class="table table-bordered">
 	<tbody>
