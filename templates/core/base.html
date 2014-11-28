@@ -20,7 +20,9 @@
 
       <div class="container">
 
-        <h2>Bem-vindo ao Sispai!</h2>
+        <p>Bem-vindo   {%if usuario%}
+  {{usuario}}
+  {% endif %}!</p>
 
         <form id="atv" align="center" action="/core/toggle" method="get">
           <div align="center">
