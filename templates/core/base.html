@@ -1,21 +1,5 @@
 {% extends 'structure.html' %}   
-
-{% block data_menu %}
-    <form method="get" name action="/control">
-		{%if checado %}
-			<button type="submit" name="sensorInfo" width="50px" style="color:blue" class="btn btn-default navbar-btn">
-				Sensores: OK
-			</button>
-		{% else %}
-			<button type="submit" name="sensorInfo" width="50px" style="color:red" class="btn btn-default navbar-btn">
-				Sensores: Falha detectada
-			</button>
-		{% endif %}
-			<button type="submit" name="history" width="50px" class="btn btn-default navbar-btn">Histórico</button>
-		    <button type="submit" name="logout" width="50px" class="btn btn-default navbar-btn">Sair</button>
-	</form>
-{% endblock %}
-
+{%load static%}
 {% block body_page %}
 
       <div class="container">
@@ -27,11 +11,13 @@
         <form id="atv" align="center" action="/core/toggle" method="get">
           <div align="center">
            {% if ativado %}
-           <p align="center">Sistema Ativado.</p>
-        	 <input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Desativar">
+           <p align="center">Piscina Aberta.</p>
+           <p><img src="{% static "img/open1.png" %}" width="100" height="100"></p>
+        	 <p><input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Fechar"></p>
             {% else %}
-            <p align="center">Sistema Desativado.</p>
-	         <input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Ativar">
+            <p align="center">Piscina Fechada.</p>
+            <p><img src="{% static "img/close1.png" %}" width="100" height="100"></p>
+	         <p><input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Abrir"></p>
             {% endif %}
           </div>
         </form>

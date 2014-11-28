@@ -181,16 +181,23 @@ def sensorsReport(request):
 		return redirect(logar)
 	ad1= request.user
 	p1= Pool.objects.get(adult=ad1)
-	return render(request, "sensor_report.html", {"infrared": p1.infraRedFail, "zigbee": p1.zigbeeFail,"crush": p1.crushFail,"endCourseOpen": p1.endCourseOpenFail, "endCourseClose": p1.endCourseCloseFail})
+	status_ativacao = p1.isActivated
+	checado = not(p1.infraRedFail or p1.zigbeeFail or p1.endCourseOpenFail or p1.endCourseCloseFail or p1.crushFail)
+	sensors = {"infrared": p1.infraRedFail, "zigbee": p1.zigbeeFail,"crush": p1.crushFail,"endCourseOpen": p1.endCourseOpenFail, "endCourseClose": p1.endCourseCloseFail}
+	print sensors
+
+	return render(request, "sensor_report.html", {'usuario':ad1.username, 'ativado': status_ativacao, 'checado':checado,"sensors": sensors})
 
 def logPage(request):
 	if not request.user.is_authenticated():
 		return redirect(logar)
 	ad1= request.user
 	p1= Pool.objects.get(adult=ad1)
+	status_ativacao = p1.isActivated
+	checado = not(p1.infraRedFail or p1.zigbeeFail or p1.endCourseOpenFail or p1.endCourseCloseFail or p1.crushFail)
 	logs = PoolLog.objects.filter(pool=p1)
 
-	return render(request, "history.html", {"logList": logs})
+	return render(request, "history.html", {'usuario':ad1.username, 'ativado': status_ativacao, 'checado':checado,"logList": logs})
 
 def close(request):
 	logout(request)
