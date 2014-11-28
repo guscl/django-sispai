@@ -181,9 +181,7 @@ def sensorsReport(request):
 		return redirect(logar)
 	ad1= request.user
 	p1= Pool.objects.get(adult=ad1)
-	sensors = {"infrared": p1.infraRedFail, "zigbee": p1.zigbeeFail,"crush": p1.crushFail,"endCourseOpen": p1.endCourseOpenFail, "endCourseClose": p1.endCourseCloseFail}
-	print sensors
-	return render(request, "sensor_report.html", {"sensors": sensors})
+	return render(request, "sensor_report.html", {"infrared": p1.infraRedFail, "zigbee": p1.zigbeeFail,"crush": p1.crushFail,"endCourseOpen": p1.endCourseOpenFail, "endCourseClose": p1.endCourseCloseFail})
 
 def logPage(request):
 	if not request.user.is_authenticated():

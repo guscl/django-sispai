@@ -23,16 +23,46 @@
 
 <table class="table table-bordered">
 	<tbody>
-		{% for sensor in sensors %}
-			<tr>
-				<td>{{sensor}}</td>
-				{% if sensors.sensor %}
-					<td style="color:red">Falhando</td>
-				{% else %}
-					<td style="color:blue">Funcionando</td>
-				{% endif %}
-			</tr>
-		{%endfor%}
+		<tr>
+			<td>infrared</td>
+			{% if infrared %}
+				<td style="color:red">Falhando</td>
+			{% else %}
+				<td style="color:blue">Funcionando</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td>zigbee</td>
+			{% if zigbee %}
+				<td style="color:red">Falhando</td>
+			{% else %}
+				<td style="color:blue">Funcionando</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td>crush</td>
+			{% if crush %}
+				<td style="color:red">Falhando</td>
+			{% else %}
+				<td style="color:blue">Funcionando</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td>endCourseOpen</td>
+			{% if endCourseOpen %}
+				<td style="color:red">Falhando</td>
+			{% else %}
+				<td style="color:blue">Funcionando</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td>endCourseClose</td>
+			{% if endCourseClose %}
+				<td style="color:red">Falhando</td>
+			{% else %}
+				<td style="color:blue">Funcionando</td>
+			{% endif %}
+		</tr>
 	</tbody>
 </table>
 
