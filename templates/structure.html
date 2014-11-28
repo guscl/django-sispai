@@ -60,11 +60,13 @@
 		    <tr>
 		    <td width="450px">
 		{%if usuario%}
+		<a href="/core/">
 		{%if ativado %}
-    		<font color="blue"> Sistema Ativado</font>
+    		<font color="blue"> Piscina Aberta</font>
     	{%else%}
-    		<font color="red"> Sistema Desativado</font>
+    		<font color="red"> Piscina Fechada</font>
     	{%endif%}
+    	</a>
 		    </td>
 		    <td>
 			    <form method="get" name action="/control">
