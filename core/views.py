@@ -45,5 +45,7 @@ def alterSensorStatus(request):
 	c = Context({'checado': 1})
 	return HttpResponse(t.render(c))
 	
-
+def saveAsLog(request):
+	
+	return HttpResponse(t.render(c))
 
