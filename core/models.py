@@ -27,3 +27,4 @@ class PoolLog(models.Model):
         log = cls(pool=pool,message=message)
         return log
 
+

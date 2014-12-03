@@ -1,5 +1,9 @@
 from django.template import Context, loader
+<<<<<<< HEAD
 from core.models import Pool, PoolLog
+=======
+from core.models import Adult, Pool, PoolLog
+>>>>>>> 45db55c... All communications done
 from django.http import HttpResponse
 #from emailSender import sendMessage
 from django.contrib.auth.models import User
