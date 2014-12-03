@@ -16,9 +16,8 @@ urlpatterns = patterns('',
 	url(r'^close$', 'core.views.poolClose'),
 	url(r'^getout$', 'core.views.userGetOut'),
 	url(r'^getin$', 'core.views.userGetIn'),
-	url(r'^fail$', 'core.views.sensorFail'),
-	
-    url(r'^core/sensors/$', 'core.views.alterSensorStatus'),
+	url(r'^fall$', 'core.views.userFall'),
+	url(r'^sensors$', 'core.views.sensorError'),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

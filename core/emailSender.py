@@ -9,5 +9,5 @@ server.login("sispaiunb@gmail.com", "dinossauro")
 
 def sendMessage():
 	print "Gussssss"
-	msg = "\n Ocorreu um erro com os sensores de sua Piscina!" # The /n separates the message from the headers
+	msg = "\n Ocorreu um erro com os sensores de sua Piscina!"
 	server.sendmail("sispaiunb@gmail.com", "correia.gustavol@gmail.com", msg)

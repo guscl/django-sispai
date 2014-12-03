@@ -1,11 +1,7 @@
 from django.template import Context, loader
-<<<<<<< HEAD
 from core.models import Pool, PoolLog
-=======
-from core.models import Adult, Pool, PoolLog
->>>>>>> 45db55c... All communications done
 from django.http import HttpResponse
-#from emailSender import sendMessage
+from emailSender import sendMessage
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 import httplib
@@ -63,6 +59,9 @@ def poolOpen(request):
 	p1.save()
 	log = PoolLog.create(p1,"Piscina aberta")
 	log.save()
+	t = loader.get_template('core/base.html')
+	c = Context({'checado': 1})
+	return HttpResponse(t.render(c))
 
 def poolClose(request):
 	username = request.POST.get('user')
@@ -76,6 +75,9 @@ def poolClose(request):
 	p1.save()
 	log = PoolLog.create(p1,"Piscina fechada")
 	log.save()
+	t = loader.get_template('core/base.html')
+	c = Context({'checado': 1})
+	return HttpResponse(t.render(c))
 
 def userGetOut(request):
 	username = request.POST.get('user')
@@ -85,8 +87,11 @@ def userGetOut(request):
 	p1.zigbee = False
 	p1.zigbeeFail = False
 	p1.save()
-	log = PoolLog.create(p1,"Usuario saiu da area")
+	log = PoolLog.create(p1,"Usuario saiu da area, mas ainda tem alguém")
 	log.save()
+	t = loader.get_template('core/base.html')
+	c = Context({'checado': 1})
+	return HttpResponse(t.render(c))
 
 def userGetIn(request):
 	username = request.POST.get('user')
@@ -98,41 +103,33 @@ def userGetIn(request):
 	p1.save()
 	log = PoolLog.create(p1,"Usuario entrou na area")
 	log.save()
+	t = loader.get_template('core/base.html')
+	c = Context({'checado': 1})
+	return HttpResponse(t.render(c))
 
-def sensorFail(request):
+def userFall(request):
 	username = request.POST.get('user')
 	ad1 = User.objects.get(username=username)
 	p1= Pool.objects.get(adult=ad1)
-	p1.infraRedFail = True if request.POST.get('infrared') == '1' else False
-	p1.zigbeeFail = True if request.POST.get('zigbee') == '1' else False
-	p1.endCourseOpenFail = True if request.POST.get('endCourseOpen') == '1' else False
-	p1.endCourseCloseFail = True if request.POST.get('endCourseClose') == '1' else False
-	p1.crushFail = True if request.POST.get('crush') == '1' else False
+	p1.isActivated = True
+	p1.zigbee = True
+	p1.zigbeeFail = False
 	p1.save()
-	
-	string_log = "falha no sensor "
-	if (p1.infraRedFail):
-		string_log = string_log + "infravermelho, "
-	if (p1.zigbeeFail):
-		string_log = string_log + "zigbee, "
-	if (p1.endCourseOpenFail):
-		string_log = string_log + "fim de curso de aberto, "
-	if (p1.endCourseCloseFail):
-		string_log = string_log + "fim de curso de fechado, "
-	if (p1.crushFail):
-		string_log = string_log + "de esmagamento."
-	
-	log = PoolLog.create(p1,string_log)
+	log = PoolLog.create(p1,"Alguém caiu na Piscina")
 	log.save()
+	t = loader.get_template('core/base.html')
+	c = Context({'checado': 1})
+	return HttpResponse(t.render(c))
 
-def alterSensorStatus(request):
+
+def sensorError(request):
 	ad1= User.objects.get(email="root")
 	p1= Pool.objects.get(adult=ad1.id)
 	p1.isChecked = True
 	p1.save()
-	log = PoolLog.create(p1,"Sensores com Problema")
+	log = PoolLog.create(p1,"Sensore Infravermelho com problema")
 	log.save()
-#	sendMessage()
+	sendMessage()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
 	return HttpResponse(t.render(c))
@@ -153,7 +150,7 @@ def registrar(request):
 
     return render(request, "registrar.html", {"form": UserCreationForm() })
 
-# pagina de login do jogador
+# pagina de login 
 def logar(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST) # Veja a documentacao desta funcao
