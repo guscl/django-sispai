@@ -11,13 +11,13 @@
         <form id="atv" align="center" action="/core/toggle" method="get">
           <div align="center">
            {% if ativado %}
-           <p align="center">Piscina Aberta.</p>
+           <p align="center">Sistema Habilitado.</p>
            <p><img src="{% static "img/open1.png" %}" width="100" height="100"></p>
-        	 <p><input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Fechar"></p>
+        	 <p><input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Desabilitar"></p>
             {% else %}
-            <p align="center">Piscina Fechada.</p>
+            <p align="center">Sistema Desabilitado.</p>
             <p><img src="{% static "img/close1.png" %}" width="100" height="100"></p>
-	         <p><input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Abrir"></p>
+	         <p><input align="center" class="btn btn-primary btn-lg" role="button" type = "submit" value="Habilitar"></p>
             {% endif %}
           </div>
         </form>
