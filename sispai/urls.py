@@ -12,12 +12,12 @@ urlpatterns = patterns('',
     url(r'^registrar/$', 'core.views.registrar'),
     url(r'^$', 'core.views.logar'),
 
-	url(r'^open$', 'core.views.poolOpen'),
-	url(r'^close$', 'core.views.poolClose'),
-	url(r'^getout$', 'core.views.userGetOut'),
-	url(r'^getin$', 'core.views.userGetIn'),
-	url(r'^fall$', 'core.views.userFall'),
-	url(r'^sensors$', 'core.views.sensorError'),
+	url(r'^open/$', 'core.views.poolOpen'),
+	url(r'^close/$', 'core.views.poolClose'),
+	url(r'^getout/$', 'core.views.userGetOut'),
+	url(r'^fall/$', 'core.views.userFall'),
+    url(r'^crush/$', 'core.views.userCrush'),
+	url(r'^sensors/$', 'core.views.sensorError'),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

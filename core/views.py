@@ -1,9 +1,5 @@
 from django.template import Context, loader
-<<<<<<< HEAD
 from core.models import Pool, PoolLog
-=======
-from core.models import Adult, Pool, PoolLog
->>>>>>> 45db55c4f48a6cfed58ade5d2018e8f1ff866558
 from django.http import HttpResponse
 from emailSender import sendMessage
 from django.contrib.auth.models import User
@@ -41,18 +37,20 @@ def alterStatus(request):
 	p1.isActivated = status_ativacao
 	p1.save()
 	
-	httpServ = httplib.HTTPConnection("10.42.0.30", 5000)
+	httpServ = httplib.HTTPConnection("192.168.1.32", 5000)
 	httpServ.connect()
 	if(status_ativacao):
-		httpServ.request('GET', '/4/on', '')
+		httpServ.request('GET', '/40/on', '')
 	else:
-		httpServ.request('GET', '/4/off', '')
+		httpServ.request('GET', '/40/off', '')
 	httpServ.close()
 	
 	return index(request)
 
+
+
 def poolOpen(request):
-	username = request.POST.get('user')
+	username = request.GET.get('user')
 	ad1 = User.objects.get(username=username)
 	p1= Pool.objects.get(adult=ad1)
 	p1.isActivated = True
@@ -68,7 +66,7 @@ def poolOpen(request):
 	return HttpResponse(t.render(c))
 
 def poolClose(request):
-	username = request.POST.get('user')
+	username = request.GET.get('user')
 	ad1 = User.objects.get(username=username)
 	p1= Pool.objects.get(adult=ad1)
 	p1.isActivated = True
@@ -84,42 +82,44 @@ def poolClose(request):
 	return HttpResponse(t.render(c))
 
 def userGetOut(request):
-	username = request.POST.get('user')
+	username = request.GET.get('user')
 	ad1 = User.objects.get(username=username)
 	p1= Pool.objects.get(adult=ad1)
 	p1.isActivated = True
 	p1.zigbee = False
 	p1.zigbeeFail = False
 	p1.save()
-	log = PoolLog.create(p1,"Usuario saiu da area, mas ainda tem alguém")
+	log = PoolLog.create(p1,"Usuario saiu da area, mas ainda tem alguem")
 	log.save()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
 	return HttpResponse(t.render(c))
 
-def userGetIn(request):
-	username = request.POST.get('user')
-	ad1 = User.objects.get(username=username)
-	p1= Pool.objects.get(adult=ad1)
-	p1.isActivated = True
-	p1.zigbee = True
-	p1.zigbeeFail = False
-	p1.save()
-	log = PoolLog.create(p1,"Usuario entrou na area")
-	log.save()
-	t = loader.get_template('core/base.html')
-	c = Context({'checado': 1})
-	return HttpResponse(t.render(c))
+
 
 def userFall(request):
-	username = request.POST.get('user')
+	username = request.GET.get('user')
 	ad1 = User.objects.get(username=username)
 	p1= Pool.objects.get(adult=ad1)
 	p1.isActivated = True
 	p1.zigbee = True
 	p1.zigbeeFail = False
 	p1.save()
-	log = PoolLog.create(p1,"Alguém caiu na Piscina")
+	log = PoolLog.create(p1,"Alguem caiu na Piscina")
+	log.save()
+	t = loader.get_template('core/base.html')
+	c = Context({'checado': 1})
+	return HttpResponse(t.render(c))
+
+def userCrush(request):
+	username = request.GET.get('user')
+	ad1 = User.objects.get(username=username)
+	p1= Pool.objects.get(adult=ad1)
+	p1.isActivated = True
+	p1.Crush = True
+	p1.CrushFail = False
+	p1.save()
+	log = PoolLog.create(p1,"Esmagamento detectado")
 	log.save()
 	t = loader.get_template('core/base.html')
 	c = Context({'checado': 1})
@@ -127,11 +127,14 @@ def userFall(request):
 
 
 def sensorError(request):
-	ad1= User.objects.get(email="root")
+	username = request.GET.get('user')
+	ad1 = User.objects.get(username=username)
 	p1= Pool.objects.get(adult=ad1.id)
 	p1.isChecked = True
+	p1.isActivated = True
+	p1.infraRedFail = True
 	p1.save()
-	log = PoolLog.create(p1,"Sensore Infravermelho com problema")
+	log = PoolLog.create(p1,"Sensores Infravermelho com problema")
 	log.save()
 	sendMessage()
 	t = loader.get_template('core/base.html')
@@ -198,7 +201,7 @@ def logPage(request):
 	status_ativacao = p1.isActivated
 	checado = not(p1.infraRedFail or p1.zigbeeFail or p1.endCourseOpenFail or p1.endCourseCloseFail or p1.crushFail)
 	logs = PoolLog.objects.filter(pool=p1)
-
+	logs = logs[::-1]
 	return render(request, "history.html", {'usuario':ad1.username, 'ativado': status_ativacao, 'checado':checado,"logList": logs})
 
 def close(request):
